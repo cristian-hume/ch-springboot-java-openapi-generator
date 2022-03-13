@@ -1,11 +1,15 @@
 package ch.springboot.java.app.openapigenerator.cotroller;
 
-import ch.springboot.java.app.openapigenerator.api.CustomerApi;
-import ch.springboot.java.app.openapigenerator.model.CreateCustomerRequest;
-import ch.springboot.java.app.openapigenerator.model.CreateCustomerResponse;
-import ch.springboot.java.app.openapigenerator.model.FindCustomerResponse;
-import ch.springboot.java.app.openapigenerator.model.UpdateCustomerRequest;
+import ch.springboot.java.app.openapigenerator.api.UserApi;
+import ch.springboot.java.app.openapigenerator.model.CreateUserRequest;
+import ch.springboot.java.app.openapigenerator.model.CreateUserResponse;
+import ch.springboot.java.app.openapigenerator.model.FindUserResponse;
+import ch.springboot.java.app.openapigenerator.model.UpdateUserRequest;
+import ch.springboot.java.app.openapigenerator.service.UserService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import java.util.UUID;
 
 /**
@@ -13,25 +17,36 @@ import java.util.UUID;
  * @version 1.0.0
  * @since   2022.03.08-RENNY (HAPPY-BIRTHDAY)
  */
-public class UserController implements CustomerApi {
+@RestController
+@RequestMapping("/api/openapi-gemerator//v1")
+public class UserController implements UserApi {
 
-    @Override
-    public ResponseEntity<CreateCustomerResponse> createUser(CreateCustomerRequest createCustomerRequest) {
-        return null;
+    private final UserService userService;
+
+    public UserController(UserService userService) {
+        this.userService = userService;
     }
 
     @Override
-    public ResponseEntity<Void> deleteCustomer(String customerId) {
-        return null;
+    public ResponseEntity<CreateUserResponse> createUser(CreateUserRequest createUserRequest) {
+        return ResponseEntity.ok(userService.createUser(createUserRequest));
     }
 
     @Override
-    public ResponseEntity<FindCustomerResponse> getUser(UUID customerId) {
-        return null;
+    public ResponseEntity<FindUserResponse> findUser(UUID userId) {
+        return ResponseEntity.ok(userService.findUser(userId));
     }
 
     @Override
-    public ResponseEntity<Void> putUser(String customerId, UpdateCustomerRequest updateCustomerRequest) {
-        return null;
+    public ResponseEntity<Void> updateUser(String userId, UpdateUserRequest updateUserRequest) {
+        userService.updateUser(userId, updateUserRequest);
+        return ResponseEntity.ok().build();
     }
+
+    @Override
+    public ResponseEntity<Void> deleteUser(String userId) {
+        userService.deleteUser(userId);
+        return ResponseEntity.ok().build();
+    }
+
 }

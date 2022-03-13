@@ -84,8 +84,8 @@ openApiGenerate {
 
 }
 
-clean.dependsOn tasks.openApiGenerateClean
 compileJava.dependsOn tasks.openApiGenerate
+clean.dependsOn tasks.openApiGenerateClean
 // compileJava.mustRunAfter tasks.openApiGenerate
 
 sourceSets.main.java.srcDirs += "$projectDir/src/main/generated"
