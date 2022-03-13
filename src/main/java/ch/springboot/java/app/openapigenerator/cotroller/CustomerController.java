@@ -6,9 +6,6 @@ import ch.springboot.java.app.openapigenerator.model.CreateCustomerResponse;
 import ch.springboot.java.app.openapigenerator.model.FindCustomerResponse;
 import ch.springboot.java.app.openapigenerator.model.UpdateCustomerRequest;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.context.request.NativeWebRequest;
-
-import java.util.Optional;
 import java.util.UUID;
 
 /**

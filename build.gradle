@@ -33,7 +33,7 @@ dependencies {
 }
 
 openApiMeta {
-	generatorName = "Sample"
+	generatorName = "openapi-generator"
 	packageName = "ch.springboot.java.app.openapigenerator"
 	outputFolder = "$buildDir/meta".toString()
 }
@@ -51,20 +51,25 @@ task openApiGenerateClean(group: 'OpenAPI Tools', type: Delete, description: 'De
 
 openApiGenerate {
 	generatorName = "spring"
+
 	inputSpec = "$rootDir/src/main/resources/openapi/api.yml".toString()
 	// inputSpec = "$projectDir/src/main/resources/openapi/api.yml".toString()
+
 	outputDir = "$projectDir/src/main/generated".toString()
 	//outputDir = "$buildDir/generated".toString()
+
 	apiPackage = "ch.springboot.java.app.openapigenerator.api"
 	modelPackage = "ch.springboot.java.app.openapigenerator.model"
+
 	globalProperties = [
-			// force only the models
+			// force only the apis and models
 			apis: '',
 			invokers: 'false',
 			models: '',
 			supportingFiles: 'false'
 			//supportingFiles: 'ApiUtil.java'
 	]
+
 	configOptions = [
 			dateLibrary: "java8",
 			hideGenerationTimestamp: 'true',
@@ -75,17 +80,18 @@ openApiGenerate {
 			useOptional			   : "false",
 			skipDefaultInterface   : "true"
 	]
+
 }
 
+clean.dependsOn tasks.openApiGenerateClean
 compileJava.dependsOn tasks.openApiGenerate
-sourceSets.main.java.srcDirs += "$projectDir/src/main/generated"
-// sourceSets.main.java.srcDirs += "$buildDir/generated/sources/openapi/src/main/java"
-
 // compileJava.mustRunAfter tasks.openApiGenerate
-// sourceSets.main.java.srcDirs += "$buildDir/generated/sources/openapi/src/main/java"
 
-// sourceSets.main.java.srcDir "${buildDir}/generated/src/main/java"
+sourceSets.main.java.srcDirs += "$projectDir/src/main/generated"
+// sourceSets.main.java.srcDir "${buildDir}/src/main/generated"
 // sourceSets.main.java.srcDir "$projectDir/src/main/generated"
+// sourceSets.main.java.srcDirs += "$buildDir/generated/sources/openapi/src/main/java"
+// sourceSets.main.java.srcDirs += "$buildDir/generated/sources/openapi/src/main/java"
 
 tasks.named('test') {
 	useJUnitPlatform()
