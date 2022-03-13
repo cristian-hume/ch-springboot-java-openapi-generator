@@ -1,0 +1,57 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '2.6.4'
+	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+	id "org.openapi.generator" version "5.4.0"
+}
+
+group = 'ch.examples'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+openApiMeta {
+	generatorName = "Sample"
+	packageName = "ch.springboot.java.app.openapigenerato"
+	outputFolder = "$buildDir/meta".toString()
+}
+
+openApiValidate {
+	// inputSpec = "$rootDir/src/main/resources/openapi/api.yml".toString()
+	inputSpec = "$projectDir/src/main/resources/openapi/api.yml".toString()
+	recommend = true
+}
+
+task openApiGenerateClean(group: 'OpenAPI Tools', type: Delete, description: 'Delete the directory that OPENApi generator uses') {
+	delete 'src/main/generated'
+}
+//tasks['openApiGenerate'].dependsOn openApiGenerateClean
+
+openApiGenerate {
+	generatorName = "spring"
+	inputSpec = "$rootDir/src/main/resources/openapi/api.yml".toString()
+	// inputSpec = "$projectDir/src/main/resources/openapi/api.yml".toString()
+	outputDir = "$projectDir/src/main/generated".toString()
+	//outputDir = "$buildDir/generated".toString()
+	apiPackage = "ch.springboot.java.app.openapigenerato.api"
+	modelPackage = "ch.springboot.java.app.openapigenerato.model"
+	configOptions = [
+			dateLibrary: "java8"
+	]
+}
+
+compileJava.mustRunAfter tasks.openApiGenerate
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
+
+defaultTasks 'build'
