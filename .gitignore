@@ -878,3 +878,5 @@ out/
 *.rdb
 dump.rdb
 
+### OpenAPI Generator ###
+**/src/main/generated

@@ -15,12 +15,26 @@ repositories {
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+
+	// https://mvnrepository.com/artifact/io.swagger/swagger-annotations
+	implementation group: 'io.swagger', name: 'swagger-annotations', version: '1.6.5'
+
+	// https://mvnrepository.com/artifact/io.springfox/springfox-swagger2
+	implementation group: 'io.springfox', name: 'springfox-swagger2', version: '3.0.0'
+
+	// https://mvnrepository.com/artifact/org.openapitools/jackson-databind-nullable
+	implementation group: 'org.openapitools', name: 'jackson-databind-nullable', version: '0.2.2'
+
+	// https://mvnrepository.com/artifact/javax.validation/validation-api
+	implementation group: 'javax.validation', name: 'validation-api', version: '2.0.1.Final'
+
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
 }
 
 openApiMeta {
 	generatorName = "Sample"
-	packageName = "ch.springboot.java.app.openapigenerato"
+	packageName = "ch.springboot.java.app.openapigenerator"
 	outputFolder = "$buildDir/meta".toString()
 }
 
@@ -41,14 +55,37 @@ openApiGenerate {
 	// inputSpec = "$projectDir/src/main/resources/openapi/api.yml".toString()
 	outputDir = "$projectDir/src/main/generated".toString()
 	//outputDir = "$buildDir/generated".toString()
-	apiPackage = "ch.springboot.java.app.openapigenerato.api"
-	modelPackage = "ch.springboot.java.app.openapigenerato.model"
+	apiPackage = "ch.springboot.java.app.openapigenerator.api"
+	modelPackage = "ch.springboot.java.app.openapigenerator.model"
+	globalProperties = [
+			// force only the models
+			apis: '',
+			invokers: 'false',
+			models: '',
+			supportingFiles: 'false'
+			//supportingFiles: 'ApiUtil.java'
+	]
 	configOptions = [
-			dateLibrary: "java8"
+			dateLibrary: "java8",
+			hideGenerationTimestamp: 'true',
+			sourceFolder           : "",
+			useTags                : "true",
+			delegatePattern        : "false",
+			interfaceOnly          : "true",
+			useOptional			   : "false",
+			skipDefaultInterface   : "true"
 	]
 }
 
-compileJava.mustRunAfter tasks.openApiGenerate
+compileJava.dependsOn tasks.openApiGenerate
+sourceSets.main.java.srcDirs += "$projectDir/src/main/generated"
+// sourceSets.main.java.srcDirs += "$buildDir/generated/sources/openapi/src/main/java"
+
+// compileJava.mustRunAfter tasks.openApiGenerate
+// sourceSets.main.java.srcDirs += "$buildDir/generated/sources/openapi/src/main/java"
+
+// sourceSets.main.java.srcDir "${buildDir}/generated/src/main/java"
+// sourceSets.main.java.srcDir "$projectDir/src/main/generated"
 
 tasks.named('test') {
 	useJUnitPlatform()
