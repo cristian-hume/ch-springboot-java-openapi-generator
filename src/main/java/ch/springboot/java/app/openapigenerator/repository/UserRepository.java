@@ -5,5 +5,5 @@ package ch.springboot.java.app.openapigenerator.repository;
  * @version 1.0.0
  * @since   2022.03.08-RENNY (HAPPY-BIRTHDAY)
  */
-public class CustomerRepository {
+public class UserRepository {
 }

@@ -274,7 +274,7 @@ components:
           example: 'cristian.hume@programmer.net'
         phone:
           type: string
-          example: '+56 9 8877 6655'
+          example: '+56 9 8221 4860'
         status:
           type: string
           example: 'Active'
@@ -296,7 +296,7 @@ components:
           example: 'cristian.hume@programmer.net'
         phone:
           type: string
-          example: '+56 9 8877 6655'
+          example: '+56 9 8221 4860'
         status:
           type: string
           example: 'Active'

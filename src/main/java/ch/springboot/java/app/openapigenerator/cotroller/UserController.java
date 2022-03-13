@@ -13,7 +13,7 @@ import java.util.UUID;
  * @version 1.0.0
  * @since   2022.03.08-RENNY (HAPPY-BIRTHDAY)
  */
-public class CustomerController implements CustomerApi {
+public class UserController implements CustomerApi {
 
     @Override
     public ResponseEntity<CreateCustomerResponse> createUser(CreateCustomerRequest createCustomerRequest) {
