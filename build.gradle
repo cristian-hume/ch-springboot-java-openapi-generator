@@ -7,6 +7,7 @@ plugins {
 
 group = 'ch.examples'
 version = '0.0.1-SNAPSHOT'
+
 sourceCompatibility = '1.8'
 
 repositories {
@@ -88,10 +89,8 @@ compileJava.dependsOn tasks.openApiGenerate
 // compileJava.mustRunAfter tasks.openApiGenerate
 
 sourceSets.main.java.srcDirs += "$projectDir/src/main/generated"
-// sourceSets.main.java.srcDir "${buildDir}/src/main/generated"
 // sourceSets.main.java.srcDir "$projectDir/src/main/generated"
-// sourceSets.main.java.srcDirs += "$buildDir/generated/sources/openapi/src/main/java"
-// sourceSets.main.java.srcDirs += "$buildDir/generated/sources/openapi/src/main/java"
+// sourceSets.main.java.srcDir "${buildDir}/src/main/generated"
 
 tasks.named('test') {
 	useJUnitPlatform()
